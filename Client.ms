@@ -22,6 +22,9 @@ c.waiting.enter = function(p,o)
 	print "I want a burger"
 end function
 c.waiting.update = function(o)
+	if o.order.len == 0 then
+		o.changeState "exit"
+	end if
 end function
 c.waiting.exit = function(n, o)
 	print "Thanks!"

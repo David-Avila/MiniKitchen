@@ -1,25 +1,32 @@
-Plate = new Sprite
-Plate.type = null
-Plate.ingredient = null
+Juice = new Sprite
+Juice.type = null
+Juice.ingredient = null
 
-dsl.addFSM Plate
+dsl.addFSM Juice
 
-Plate.addState "empty"
-Plate.addState "full"
+Juice.addState "empty"
+Juice.addState "full"
 
-Plate.empty.enter = function(p, o)
-	o.image = dsl.images[o.type + "_empty"]
+Juice.empty.enter = function(p, o)
+	o.image = dsl.images.juice_empty
+	self.fullTime = 3 * 60
 end function
 
-Plate.full.enter = function(p, o)
-	o.image = dsl.images[o.type + "_" + o.ingredient]
+Juice.empty.update = function(o)
+	if self.fullTime <= 0 then
+		o.changeState "full"
+	else
+		self.fullTime -= 1
+	end if
 end function
 
-Plate.init = function(x,y, type, ingredient)
+Juice.full.enter = function(p, o)
+	o.image = dsl.images.juice_full
+end function
+
+Juice.init = function(x,y)
 	self.x = x
 	self.y = y
-	self.type = type
-	self.ingredient = ingredient
 
 	self.localBounds = new Bounds
 	self.localBounds.height *= 0.8
@@ -31,13 +38,13 @@ Plate.init = function(x,y, type, ingredient)
 	self.changeState "empty"
 end function
 
-Plate.update = function
+Juice.update = function
 	if dsl.keyPressed("mouse 0") then
 		if self.worldBounds.contains([mouse.x, mouse.y]) and self.inState("full") then
 			for c in Clients
 				if c.inState("waiting") then
 					for o in c.order 
-						if o == self.ingredient then
+						if o == "juice" then
 							self.changeState "empty"
 							c.order.removeVal o
 							break
