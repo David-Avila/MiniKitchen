@@ -40,6 +40,7 @@ Plate.update = function
 						if o == self.ingredient then
 							self.changeState "empty"
 							c.order.removeVal o
+							c.orderUI.updateOrder c.order
 							break
 						end if
 					end for

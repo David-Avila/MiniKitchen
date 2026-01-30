@@ -1,9 +1,10 @@
+import "Order"
+
 c = new Sprite
 
 dsl.addFSM c
 
-buffer = new PixelDisplay
-
+c.image = dsl.images.placeholder_client
 c.addState "enter"
 c.addState "waiting"
 c.addState "exit"
@@ -38,9 +39,7 @@ c.enter.update = function(o)
 end function
 
 c.waiting.enter = function(p,o)
-	for r in o.order
-		print "I want " + r
-	end for
+	o.orderUI.init o.x, o.y, o.order
 end function
 c.waiting.update = function(o)
 	if o.order.len == 0 then
@@ -48,11 +47,9 @@ c.waiting.update = function(o)
 	end if
 end function
 c.waiting.exit = function(n, o)
-	print "Thanks!"
+	o.orderUI.image = null
 end function
 
-c.exit.enter = function(p,o)
-end function
 c.exit.update = function(o)
 	o.x = lerp(o.x, -200, 2 * dsl.dt)
 
@@ -66,10 +63,9 @@ c.init = function(x)
 	if rnd < 0.5 then self.x = -200 else self.x = 1160
 	self.y = 380
 
-	self.image = dsl.images.placeholder_client
-
 	self.tx = x
 	self.order = []
+	self.orderUI = new Order.Order
 
 	super.init
 	BKD.add self
@@ -77,5 +73,8 @@ c.init = function(x)
 end function
 
 c.update = function
+	self.orderUI.x = self.x + 100
+	self.orderUI.y = self.y + 48
+
 	self.updateStates
 end function
