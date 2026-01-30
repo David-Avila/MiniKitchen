@@ -1,4 +1,4 @@
-ingredients = ["burger"]
+globals.recepies = ["burger", "juice"]
 tools = ["skillet"]
 holder = ["plate"]
 
