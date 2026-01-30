@@ -7,13 +7,14 @@ end if
 
 dsl.disp = {}
 
+display(6).mode = displayMode.sprite
 display(2).mode = displayMode.sprite
 display(1).mode = displayMode.sprite
 display(0).mode = displayMode.sprite
 
 // Default displays
 globals.SOL = display(7) // Solid
-// display(6) - not used
+globals.BKD = display(6)
 globals.GFX = display(5) // Pixel
 globals.SPD = display(4) // Sprite
 globals.TXT = display(3) // Text
@@ -33,5 +34,20 @@ end function
 SPD.wipe = function
 	while SPD.sprites.len > 0
 		SPD.remove SPD.sprites[0]
+	end while
+end function
+
+// Helper functions
+BKD.add = function(sprite)
+	BKD.sprites.push sprite
+end function
+
+BKD.remove = function(sprite)
+	BKD.sprites.removeVal sprite
+end function
+
+BKD.wipe = function
+	while BKD.sprites.len > 0
+		BKD.remove BKD.sprites[0]
 	end while
 end function
