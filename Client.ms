@@ -25,7 +25,7 @@ c.enter.enter = function(p,o)
 
 	o.order = []
 	for i in range(0, items-1)
-		o.order.push recepies[round(rnd)]
+		o.order.push recipes[round(rnd*(recipes.len-1))]
 	end for
 end function
 

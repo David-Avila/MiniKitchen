@@ -5,14 +5,34 @@ Plate.ingredient = null
 dsl.addFSM Plate
 
 Plate.addState "empty"
-Plate.addState "full"
+Plate.addState "burger"
+Plate.addState "burger_mustard"
+Plate.addState "burger_ketchup"
+Plate.addState "burger_ketchup_mustard"
 
 Plate.empty.enter = function(p, o)
+	o.ingredient = "burger"
 	o.image = dsl.images[o.type + "_empty"]
 end function
 
-Plate.full.enter = function(p, o)
-	o.image = dsl.images[o.type + "_" + o.ingredient]
+Plate.burger.enter = function(p, o)
+	o.image = dsl.images.plate_burger
+	o.ingredient = "burger"
+end function
+
+Plate.burger_mustard.enter = function(p, o)
+	o.image = dsl.images.plate_burger_mustard
+	o.ingredient = "burger_mustard"
+end function
+
+Plate.burger_ketchup.enter = function(p, o)
+	o.image = dsl.images.plate_burger_ketchup
+	o.ingredient = "burger_ketchup"
+end function
+
+Plate.burger_ketchup_mustard.enter = function(p, o)
+	o.image = dsl.images.plate_burger_ketchup_mustard
+	o.ingredient = "burger_ketchup_mustard"
 end function
 
 Plate.init = function(x,y, type, ingredient)
@@ -33,7 +53,7 @@ end function
 
 Plate.update = function
 	if dsl.keyPressed("mouse 0") then
-		if self.worldBounds.contains([mouse.x, mouse.y]) and self.inState("full") then
+		if self.worldBounds.contains([mouse.x, mouse.y]) and not self.inState("empty") then
 			for c in Clients
 				if c.inState("waiting") then
 					for o in c.order 
