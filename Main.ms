@@ -12,6 +12,14 @@ import "Kitchen"
 
 
 game = new Sprite
+game.tools = 1
+game.plates = 1
+game.knifes = 1
+game.juices = 1
+
+// Level variables
+game.maxOrders = 1
+game.clients = 5
 
 dsl.addFSM game
 
@@ -28,10 +36,13 @@ game.kitchen.enter = function(p,o)
 end function
 
 game.kitchen.update = function(o)
+	TRD.clear
+
 	for sp in SPD.sprites
 		sp.process
 	end for
-	for sp in BKD.sprites
+	
+	for sp in UID.sprites
 		sp.process
 	end for
 end function
@@ -62,3 +73,5 @@ end while
 
 SPD.wipe
 BKD.wipe
+UID.wipe
+TRD.clear

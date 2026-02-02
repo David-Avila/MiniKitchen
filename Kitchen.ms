@@ -23,14 +23,14 @@ kit.init = function
 	GFX.clear
 	GFX.drawImage dsl.images.table, 0,0, 960, 640
 
-	for i in range(0,2)
+	for i in range(0,game.tools-1)
 		t = Tool.Tool.clone
 		t.scale = [1, 0.8]
 		t.init 180 + 16 * i, 155 + 64 * i, "skillet", "burger", "first"
 		FirstTools.push t
 	end for
 
-	for i in range(0,2)
+	for i in range(0,game.plates-1)
 		p = Plate.Plate.clone
 		p.scale = [1, 0.6]
 		p.init 300 + 8 * i, 165 + 60 * i, "plate", "burger"
@@ -41,7 +41,7 @@ kit.init = function
 	is.init 180, 64, "burger", "first"
 
 
-	for i in range(0,2)
+	for i in range(0,game.knifes-1)
 		t = Tool.Tool.clone
 		t.scale = [1, 0.8]
 		t.init 700 - 16 * i, 155 + 64 * i, "knife", "carrot", "second"
@@ -60,15 +60,20 @@ kit.init = function
 	k.init 480, 280, "ketchup"
 
 	c = Client.c.clone
-	c.order = ["burger", "burger", "juice"]
 	c.init 480
 	Clients.push c
 
-	for i in range(0, 2)
+	for i in range(0, game.juices-1)
 		j = Juice.Juice.clone
 		j.init 387 + 94 * i, 48
 	end for
 
+	self.clients = 0
+
+end function
+
+kit.spawnClient = function
+	
 end function
 
 kit.update = function

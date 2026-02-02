@@ -63,8 +63,8 @@ Tool.init = function(x,y, type, ingredient="", id="")
 	SPD.add self
 
 	self.currentTime = 0
-	self.coockTime = 3 * 60
-	self.burnTime = 4 * 60
+	self.coockTime = 4 * 60
+	self.burnTime = 15 * 60
 
 	self.localBounds = new Bounds
 	self.localBounds.x += 8

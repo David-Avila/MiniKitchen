@@ -5,6 +5,7 @@ c = new Sprite
 dsl.addFSM c
 
 c.image = dsl.images.placeholder_client
+
 c.addState "enter"
 c.addState "waiting"
 c.addState "exit"
@@ -24,9 +25,10 @@ c.enter.enter = function(p,o)
 	end if
 
 	o.order = []
-	for i in range(0, items-1)
+	for i in range(0, game.maxOrders-1)
 		o.order.push recipes[round(rnd*(recipes.len-1))]
 	end for
+
 end function
 
 c.enter.update = function(o)
@@ -39,9 +41,11 @@ c.enter.update = function(o)
 end function
 
 c.waiting.enter = function(p,o)
-	o.orderUI.init o.x, o.y, o.order
+	o.orderUI.restart o.order
 end function
 c.waiting.update = function(o)
+	o.orderUI.update
+
 	if o.order.len == 0 then
 		o.changeState "exit"
 	end if
@@ -54,21 +58,28 @@ c.exit.update = function(o)
 	o.x = lerp(o.x, -200, 2 * dsl.dt)
 
 	if o.x < -180 then
-		TXT.clear
-		o.changeState "enter"
+		UID.remove o
 	end if
 end function
 
 c.init = function(x)
 	if rnd < 0.5 then self.x = -200 else self.x = 1160
+	
 	self.y = 380
 
 	self.tx = x
 	self.order = []
+
+	self.greenTime = 15 * 60
+	self.yellowTime = 5 * 60
+	self.redTime = 5 * 60
+
 	self.orderUI = new Order.Order
+	self.orderUI.init self.x, self.y, [15, 5, 5]
+	self.orderUI.client = self
 
 	super.init
-	BKD.add self
+	UID.add self
 	self.changeState "enter"
 end function
 
