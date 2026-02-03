@@ -41,13 +41,17 @@ end function
 Juice.update = function
 	if dsl.keyPressed("mouse 0") then
 		if self.worldBounds.contains([mouse.x, mouse.y]) and self.inState("full") then
+			done = false
 			for c in Clients
+				if done then break
+
 				if c.inState("waiting") then
 					for o in c.order 
 						if o == "juice" then
 							self.changeState "empty"
 							c.order.removeVal o
 							c.orderUI.updateOrder c.order
+							done = true
 							break
 						end if
 					end for

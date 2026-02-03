@@ -16,16 +16,18 @@ c.enter.enter = function(p,o)
 
 	r = rnd
 
-	if r < 0.33 then
+	if r < 0.4 then
 		items = 1
-	else if r < 0.7 then
+	else if r < 0.8 then
 		items = 2
 	else
 		items = 3
 	end if
 
+	if items > game.maxOrders then items = game.maxOrders
+
 	o.order = []
-	for i in range(0, game.maxOrders-1)
+	for i in range(0, items-1)
 		o.order.push recipes[round(rnd*(recipes.len-1))]
 	end for
 
@@ -58,6 +60,7 @@ c.exit.update = function(o)
 	o.x = lerp(o.x, -200, 2 * dsl.dt)
 
 	if o.x < -180 then
+		game.kit.idTaken[o.id] = 0
 		UID.remove o
 	end if
 end function
@@ -66,6 +69,7 @@ c.init = function(x)
 	if rnd < 0.5 then self.x = -200 else self.x = 1160
 	
 	self.y = 380
+	self.id = null
 
 	self.tx = x
 	self.order = []

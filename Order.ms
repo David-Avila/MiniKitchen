@@ -30,7 +30,7 @@ Order.restart = function(order)
 	self.percent = 1
 	self.colorId = 0
 
-	self.remainingTime = self.totalTime
+	self.remainingTime = time + self.totalTime
 	self.targetTime =  time + self.totalTime
 end function
 

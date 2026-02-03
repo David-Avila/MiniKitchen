@@ -10,15 +10,17 @@ dsl.importSounds
 import "SpriteTimer"
 import "Kitchen"
 
-
 game = new Sprite
-game.tools = 1
-game.plates = 1
-game.knifes = 1
-game.juices = 1
+game.kit = null
+game.toolLvl 	= 3
+game.plateLvl 	= 3
+game.knifeLvl 	= 3
+game.juiceLvl 	= 3
+
+game.spawnTime = 4
 
 // Level variables
-game.maxOrders = 1
+game.maxOrders = 3
 game.clients = 5
 
 dsl.addFSM game

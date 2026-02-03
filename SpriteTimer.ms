@@ -1,6 +1,7 @@
 import "listUtil"
 
 Sprite._timers = null
+Sprite.lvl = 1
 Sprite.startTimer = function(duration, prop, value=null)
 	t = new {}
 	t.time = time + duration

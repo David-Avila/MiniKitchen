@@ -118,13 +118,16 @@ Tool.update = function
 					end if
 				end for
 			else if self.type == "knife" then
+				done = false
 				for c in Clients
+					if done then break
 					if c.inState("waiting") then
 						for o in c.order 
 							if o == self.ingredient then
 								self.changeState "empty"
 								c.order.removeVal o
 								c.orderUI.updateOrder c.order
+								done = true
 								break
 							end if
 						end for
